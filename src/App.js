@@ -15,6 +15,19 @@ class App extends Component {
     filter: ''
   }
 
+  componentDidMount() {
+    const sevedContacts = localStorage.getItem(`contacts-list`);
+    if (sevedContacts !== null) {
+      this.setState({ contacts: JSON.parse(sevedContacts) });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem(`contacts-list`, JSON.stringify(this.state.contacts));
+    }
+  }
+
   addContact = newContact => {
     const { name, number } = newContact;
 
